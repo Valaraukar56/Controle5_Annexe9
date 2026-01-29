@@ -1,0 +1,38 @@
+[DEFAULT]
+bantime = 10m
+findtime = 10m
+maxretry = 5
+
+# ============================================
+# JAIL 1 : Protection SSH (Standard)
+# ============================================
+[sshd]
+enabled = true
+port = ssh
+filter = sshd
+logpath = /var/log/auth.log
+maxretry = 3
+bantime = 30m
+
+# ============================================
+# JAIL 2 : Protection des tentatives de connexion
+# ============================================
+[auth-login]
+enabled = true
+port = http,https
+filter = auth-login
+logpath = /var/log/apache2/auth_access.log
+maxretry = 3
+findtime = 1m
+bantime = 1m
+
+# ============================================
+# JAIL 3 : Protection contre les scans de vulnerabilites
+# ============================================
+[auth-scan]
+enabled = true
+port = http,https
+filter = auth-scan
+logpath = /var/log/apache2/auth_access.log
+maxretry = 5
+bantime = 1h
